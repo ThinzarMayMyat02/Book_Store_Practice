@@ -1,0 +1,122 @@
+
+<div class="container">
+  <h1 class="text-center">Book Store</h1>
+  <form [formGroup]="form">
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label col-form-label">Book Title</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control form-control" id="colFormLabel" formControlName="title" placeholder="Book Title">
+        @let titleControl = form.get('title');
+        @if (titleControl?.touched && titleControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Book Title is required.</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Book Author</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="colFormLabel" formControlName="author" placeholder="Book Author">
+        @let authorControl = form.get('author');
+        @if (authorControl?.touched && authorControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Book author is required.</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Book Description</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="colFormLabel" formControlName="desc" placeholder="Book Description">
+        @let descControl = form.get('desc');
+        @if (descControl?.touched && descControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Book description is required.</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Book Price</label>
+      <div class="col-sm-10">
+        <input type="number" class="form-control" id="colFormLabel" formControlName="price" placeholder="Book Price">
+        @let priceControl = form.get('price');
+        @if (priceControl?.touched && priceControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Book price is required.</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Book Category</label>
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="colFormLabel" formControlName="category" placeholder="Book Category">
+        @let categoryControl = form.get('category');
+        @if (categoryControl?.touched && categoryControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Book Category is required.</span>
+        </div>
+        }
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="form-check col-6">
+        <input class="form-check-input" type="radio" formControlName="isAvailable" [value]="true">
+        <label class="form-check-label">
+          Instock Book
+        </label>
+      </div>
+      <div class="form-check col-6">
+        <input class="form-check-input" type="radio" checked formControlName="isAvailable" [value]="false">
+        <label class="form-check-label" >
+          Out of Stock Book
+        </label>
+      </div>
+      @let availableControl = form.get('isAvailable');
+      @if (availableControl?.touched && availableControl?.errors?.['required']) {
+        <div>
+          <span style="color: red;">Book availity is required.</span>
+      </div>
+      }
+    </div>
+
+    @if(checkControlContains('quantity')){
+      <div class="row mb-3">
+        <label for="colFormLabel" class="col-sm-2 col-form-label">Book Quantity</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" id="colFormLabel" formControlName="quantity" placeholder="Book Quantity">
+          @let quantityControl = form.get('quantity');
+          @if (quantityControl?.touched && quantityControl?.errors?.['required']) {
+            <div>
+              <span style="color: red;">Book availity is required.</span>
+          </div>
+          }@else if (quantityControl?.touched && quantityControl?.errors?.['min']) {
+            <div>
+              <span style="color: red;">Book quantity should be more than 0.</span>
+          </div>
+          }
+        </div>
+      </div>
+    }
+
+    @if (checkControlContains('restockDate')) {
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Book Restore Date</label>
+      <div class="col-sm-10">
+        <input type="date" class="form-control" id="colFormLabel" formControlName="restockDate" placeholder="Book Quantity">
+      </div>
+    </div>
+    }
+
+    <button (click)="onSubmit()" type="button" class="btn btn-primary">Submit</button>
+  </form>
+
+</div>

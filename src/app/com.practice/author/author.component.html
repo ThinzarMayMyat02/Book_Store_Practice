@@ -1,0 +1,94 @@
+
+<div class="container">
+  <h1 class="text-center my-4">Book Author</h1>
+  <form #authorForm="ngForm" (ngSubmit)="onSubmit()">
+    <div class="row mb-3">
+      <label for="authorName" class="col-sm-2 col-form-label col-form-label">Author Name</label>
+      <div class="col-sm-10">
+        <input type="text" [(ngModel)]="author.authorName" name="authorName" class="form-control"  id="authorName" placeholder="Author Name" required>
+        @let authNameControl = authorForm.controls['authorName'];
+        @if (authNameControl?.touched) {
+          @if ( authNameControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Author Name is required.</span>
+        </div>
+        }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="personName" class="col-sm-2 col-form-label col-form-label">Person Name</label>
+      <div class="col-sm-10">
+        <input type="text" [(ngModel)]="author.personName" name="personName" class="form-control"  id="personName" placeholder="Author Person Name" required>
+        @let personNameControl = authorForm.controls['personName'];
+        @if (personNameControl?.touched) {
+        @if ( personNameControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Person Name is required.</span>
+        </div>
+        }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="email" class="col-sm-2 col-form-label col-form-label">Email</label>
+      <div class="col-sm-10">
+        <input type="text" [(ngModel)]="author.email" class="form-control" name="email" id="email" placeholder="Author Email" required>
+        @let emailControl = authorForm.controls['email'];
+        @if ( emailControl?.touched ) {
+        @if ( emailControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Author Email is required.</span>
+        </div>
+        }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="phoneNo" class="col-sm-2 col-form-label col-form-label">Phone No</label>
+      <div class="col-sm-10">
+        <input type="text" [(ngModel)]="author.phoneNo" name="phoneNo" class="form-control"
+                                id="phoneNo" placeholder="Author Phone No" required NumberOnlyDirective>
+        @let phoneNoControl = authorForm.controls['phoneNo'];
+        @if (phoneNoControl?.touched) {
+          @if ( phoneNoControl?.errors?.['required']) {
+            <div>
+              <span style="color: red;">Author Phone No is required.</span>
+          </div>
+          }
+          <!-- @else if ( phoneNoControl?.errors?.['invalidNumber']) {
+            <div>
+              <span style="color: red;">Author Phone No is acceptable number.</span>
+          </div>
+          } -->
+      }
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="address" class="col-sm-2 col-form-label col-form-label">Address</label>
+      <div class="col-sm-10">
+        <input type="" [(ngModel)]="author.address" name="address" class="form-control"  id="address"  placeholder="Author Address" required>
+        @let addressControl = authorForm.controls['address'];
+        @if (addressControl?.touched ) {
+        @if (addressControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Author Address is required.</span>
+        </div>
+        }}
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="genre" class="col-sm-2 col-form-label col-form-label">Genre</label>
+      <div class="col-sm-10">
+        <input type="text" [(ngModel)]="author.genre" name="genre" class="form-control"  id="genre" placeholder="Author Genre" required>
+        @let genreControl = authorForm.controls['genre'];
+        @if(genreControl?.touched){
+        @if ( genreControl?.errors?.['required']) {
+          <div>
+            <span style="color: red;">Author genre is required.</span>
+        </div>
+        }}
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+
+  <span>{{author.phoneNo| ThreeNumSplitWithDash }}</span>
+</div>

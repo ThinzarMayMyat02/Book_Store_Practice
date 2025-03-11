@@ -1,0 +1,33 @@
+<div class="container">
+  <table class="table table-striped-columns">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Author Name</th>
+        <th>Person Name</th>
+        <th>Genre</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Address</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (author of authorList; let index = $index; track index) {
+        <tr>
+          <td>{{index+1}}</td>
+          <td>{{author.authorName}}</td>
+          <td>{{author.personName}}</td>
+          <td>{{author.genre}}</td>
+          <td>{{author.email}}</td>
+          <td>{{author.phoneNo}}</td>
+          <td>{{author.address}}</td>
+          <td class="align-content-center">
+            <a (click)="editAuthor(index)"> <span><i class="bi bi-pencil-square"></i></span></a>
+            <a (click)="removeAuthor(index)"><span><i class="bi bi-trash"></i></span></a>
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

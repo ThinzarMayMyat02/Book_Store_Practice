@@ -9,7 +9,16 @@ export class AuthorService {
 
   constructor() { }
 
-  private authorList = new BehaviorSubject<Author[]>([]);
+  author: Author = {
+    address: "testing address",
+    authorName: "john doe",
+    email: "doe@mail.com",
+    genre: "testing genre",
+    personName: "doe ode",
+    phoneNo: "123456789"
+  }
+
+  private authorList = new BehaviorSubject<Author[]>([this.author]);
 
   getAllAuthor(){
     return this.authorList;

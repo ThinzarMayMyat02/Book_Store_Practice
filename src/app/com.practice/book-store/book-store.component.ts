@@ -8,6 +8,8 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { BookStoreServiceService } from '../service/book-store-service.service';
+import { Author, AuthorComponent } from '../author/author.component';
+import { AuthorService } from '../service/author.service';
 
 @Component({
   selector: 'app-book-store',
@@ -23,9 +25,13 @@ export class BookStoreComponent implements OnInit {
   private bookSubject = new BehaviorSubject<Book[]>([]);
 
   private _route = inject(Router);
+
+  authorList !: Author[];
   books$ = this.bookSubject.asObservable();
 
   bookService = inject(BookStoreServiceService);
+
+  authorService = inject(AuthorService);
 
   _activatedRoute = inject(ActivatedRoute);
 
@@ -39,11 +45,18 @@ export class BookStoreComponent implements OnInit {
     // console.log('Form vlaue', this.form.value);
     // this.isAvailableChanged();
 
+
     const id = this.getIdFromRoute();
     const book = this.isEdit() ? this.editBook(id): this.bookFactory();
     this.form = this.createBookForm(book);
+
+    this.authorService.getAllAuthor().subscribe(author =>{
+      this.authorList = author;
+    })
+
     this.isAvailableChanged();
     this.changeQuantityControl(book.isAvailable,book.quantity,book.restockDate);
+  // this.form.get('author')?.valueChanges.subscribe(console.log);
   }
 
   isAvailableChanged() {
@@ -124,6 +137,7 @@ export class BookStoreComponent implements OnInit {
   isEdit(){
     return this._route.url.includes('edit-book');
   }
+
   onSubmit(): void {
     if (this.form.invalid) {
       this.touchAllFields();
@@ -134,9 +148,9 @@ export class BookStoreComponent implements OnInit {
         console.log("Updated book....");
       }else{
       const bookConst = this.form.value;
+      // var author = this.form.get('author')?.value;
+      // bookConst.author = author.authorName + ", "+author.personName;
       this.bookService.addBook(bookConst);
-      console.log("Created book....");
-
       }
     this._route.navigate(['/book-table']);
     }
@@ -148,7 +162,7 @@ export class BookStoreComponent implements OnInit {
 export const books: Book[] = [
   {
     title: 'Midnight Sun ',
-    author: 'Stephenie Meyer',
+    author: null,
     desc: 'The biggest factor that made this perspective entertaining at least was Edwards’ ability to read minds. ',
     price: 25,
     category: 'Fiction',
@@ -160,7 +174,7 @@ export const books: Book[] = [
 
 export interface Book {
   title: string | null;
-  author: string | null;
+  author: Author | null;
   desc: string | null;
   price: number | null;
   category: string | null;

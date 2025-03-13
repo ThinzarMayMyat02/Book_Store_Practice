@@ -15,7 +15,7 @@
       </div>
     </div>
 
-    <div class="row mb-3">
+    <!-- <div class="row mb-3">
       <label for="colFormLabel" class="col-sm-2 col-form-label">Book Author</label>
       <div class="col-sm-10">
         <input type="text" class="form-control" id="colFormLabel" formControlName="author" placeholder="Book Author">
@@ -25,6 +25,17 @@
             <span style="color: red;">Book author is required.</span>
         </div>
         }
+      </div>
+    </div> -->
+
+    <div class="row mb-3">
+      <label for="colFormLabel" class="col-sm-2 col-form-label">Book Author</label>
+      <div class="col-sm-10">
+        <select class="form-select form-control" aria-label="Default select example" formControlName="author">
+          @for (author of authorList; let index = $index; track index) {
+            <option [ngValue]="author">{{author.authorName}},{{author.personName}}</option>
+          }
+        </select>
       </div>
     </div>
 

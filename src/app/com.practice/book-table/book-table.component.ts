@@ -20,6 +20,8 @@ export class BookTableComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllBook();
+    console.log("bookList: ",this.bookList);
+
   }
 
   getAllBook(){
@@ -43,4 +45,8 @@ export class BookTableComponent implements OnInit{
     this.bookService.updateBook(id,book);
   }
 
+
+  getLabelForBook(book:Book){
+    return book.author?.authorName + ", "+ book.author?.personName;
+    }
 }

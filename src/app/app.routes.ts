@@ -5,11 +5,11 @@ import { BookTableComponent } from './com.practice/book-table/book-table.compone
 import { AuthorTableComponent } from './com.practice/author-table/author-table.component';
 
 export const routes: Routes = [
-  {path: 'author', component: AuthorComponent},
-  {path: 'book', component: BookStoreComponent},
-  {path: 'book-table', component: BookTableComponent},
-  {path: 'edit-book/:id', component:BookStoreComponent},
-  {path: 'author-table', component:AuthorTableComponent},
-  {path: 'edit-author/:id', component:AuthorComponent},
-  {path: '', redirectTo: 'author', pathMatch: 'full'}
+  { path: 'author', component: AuthorComponent },
+  { path: 'book', component: BookStoreComponent },
+  { path: 'book-table', component: BookTableComponent },
+  { path: 'edit-book/:id', component: BookStoreComponent },
+  { path: 'author-table', component: AuthorTableComponent },
+  { path: 'edit-author/:id', component: AuthorComponent },
+  { path: '', redirectTo: 'author', pathMatch: 'full' },
 ];

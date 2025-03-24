@@ -1,6 +1,9 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Book } from '../book-store/book-store.component';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/state/app.state';
+import { createBookAction, deleteBookAction, selectBookAction, updateBookAction } from '../store/action/book.action';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +12,8 @@ export class BookStoreServiceService {
   constructor() {}
   private bookList = new BehaviorSubject<Book[]>([]);
 
-  addBook(book: Book) {
+   bookstore = inject(Store<AppState>);
+  addBookold(book: Book) {
     const currentBookList = this.bookList.getValue();
     this.bookList.next([...currentBookList, book]);
   }
@@ -34,7 +38,7 @@ export class BookStoreServiceService {
     }
   }
 
-  updateBook(id: Number, book: Book) {
+  updateBookold(id: Number, book: Book) {
     const currentBookList = this.bookList
       .getValue()
       .map((bk: Book, index: number) => {
@@ -49,5 +53,21 @@ export class BookStoreServiceService {
 
   getAllBook() {
     return this.bookList;
+  }
+
+  addBook(book: Book) {
+    this.bookstore.dispatch(createBookAction({ book }));
+  }
+
+  updateBook(id: number, book: Book) {
+    this.bookstore.dispatch(updateBookAction({ id, book }));
+  }
+
+  deleteBook(id: number) {
+    this.bookstore.dispatch(deleteBookAction({ id }));
+  }
+
+  selectBook(id: number) {
+    this.bookstore.dispatch(selectBookAction({ id }));
   }
 }

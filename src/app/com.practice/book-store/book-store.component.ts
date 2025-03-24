@@ -10,6 +10,10 @@ import { BehaviorSubject } from 'rxjs';
 import { BookStoreServiceService } from '../service/book-store-service.service';
 import { Author, AuthorComponent } from '../author/author.component';
 import { AuthorService } from '../service/author.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../store/state/app.state';
+import { createBookAction } from '../store/action/book.action';
+import { selectBookById } from '../store/selector/book.selector';
 
 @Component({
   selector: 'app-book-store',
@@ -27,13 +31,15 @@ export class BookStoreComponent implements OnInit {
   private _route = inject(Router);
 
   authorList !: Author[];
-  books$ = this.bookSubject.asObservable();
 
   bookService = inject(BookStoreServiceService);
 
   authorService = inject(AuthorService);
 
   _activatedRoute = inject(ActivatedRoute);
+
+  bookstore = inject(Store<AppState>);
+  selectedBook$: any;
 
   ngOnInit(): void {
     // this.form = this.createBookForm(this.bookFactory());
@@ -124,8 +130,14 @@ export class BookStoreComponent implements OnInit {
     };
   }
 
-  editBook(id: Number) : Book{
-    return this.bookService.findBook(id);
+  editBook(id: number):Book{
+    let temp:Book = this.bookFactory();
+     this.bookstore.select(selectBookById(id)).subscribe((book) => {
+      if(book){
+        temp = book;
+      }
+     });
+     return temp;
   }
 
   getIdFromRoute(): number {
@@ -148,14 +160,16 @@ export class BookStoreComponent implements OnInit {
         console.log("Updated book....");
       }else{
       const bookConst = this.form.value;
+      console.log('Submit Form value', bookConst);
       // var author = this.form.get('author')?.value;
       // bookConst.author = author.authorName + ", "+author.personName;
       this.bookService.addBook(bookConst);
+     // this.bookstore.dispatch(createBookAction({book: bookConst}));
       }
     this._route.navigate(['/book-table']);
     }
 
-    console.log('Submit Form value', this.form.value);
+
   }
 }
 
